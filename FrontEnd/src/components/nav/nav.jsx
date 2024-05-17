@@ -1,3 +1,4 @@
+// MainNav.jsx
 import React from "react";
 
 function MainNav() {
@@ -6,16 +7,19 @@ function MainNav() {
       <a className="main-nav-logo" href="./index.html">
         <img
           className="main-nav-logo-image"
-          src="./image/argentBankLogo.webp"
+          src="./img/argentBankLogo.png"
           alt="Argent Bank Logo"
         />
         <h1 className="sr-only">Argent Bank</h1>
       </a>
-      <diV>
+      <div>
         <a className="main-nav-item" href="./sign-in.html">
-          <i className="fa fa-user-circle"></i>Sign in
+          <i className="fa fa-user-circle"></i>
+          Sign In
         </a>
-      </diV>
+      </div>
     </nav>
   );
 }
+
+export default MainNav;
