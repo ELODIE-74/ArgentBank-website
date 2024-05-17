@@ -4,7 +4,7 @@ import React from "react";
 function MainNav() {
   return (
     <nav className="main-nav">
-      <a className="main-nav-logo" href="./index.html">
+      <a className="main-nav-logo" href="/signup">
         <img
           className="main-nav-logo-image"
           src="/image/argentBankLogo.webp"
@@ -13,7 +13,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        <a className="main-nav-item" href="./sign-in.html">
+        <a className="main-nav-item" href="./signup">
           <i className="fa fa-user-circle"></i>
           Sign In
         </a>
