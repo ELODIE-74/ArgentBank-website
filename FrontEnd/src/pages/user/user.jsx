@@ -3,6 +3,7 @@ import MainNavUser from "../../components/navuser/navuser";
 import Account from "../../components/account/account";
 import Header from "../../components/headeruser/headeruser";
 import Footer from "../../components/footer/footer";
+import "../../pages/user/user.css";
 
 function UserPage() {
   return (

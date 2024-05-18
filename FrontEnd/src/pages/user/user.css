@@ -1,0 +1,61 @@
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+
+  .main-nav-user {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .main-nav-user a {
+    margin-bottom: 0.5rem;
+  }
+
+  .header {
+    padding: 2rem 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
+  }
+
+  .account {
+    padding: 2rem 1rem;
+  }
+
+  .account h3 {
+    font-size: 1.25rem;
+  }
+
+  .account p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .main {
+    padding: 3rem 2rem;
+  }
+
+  .header {
+    padding: 3rem 2rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .account {
+    padding: 3rem 2rem;
+  }
+
+  .account h3 {
+    font-size: 1.5rem;
+  }
+
+  .account p {
+    font-size: 1rem;
+  }
+}

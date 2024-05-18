@@ -3,6 +3,7 @@ import MainNav from "../../components/nav/nav";
 import Hero from "../../components/hero/hero";
 import FeatureItem from "../../components/featureitem/featureitem";
 import Footer from "../../components/footer/footer";
+import "../../pages/home/home.css";
 
 function Home() {
   return (

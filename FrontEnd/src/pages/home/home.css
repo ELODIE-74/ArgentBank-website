@@ -1,0 +1,65 @@
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .main-nav {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .main-nav a {
+    margin-bottom: 0.5rem;
+  }
+
+  .hero {
+    height: 300px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  .feature-item {
+    margin-bottom: 2rem;
+  }
+
+  .feature-item img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .feature-item h3 {
+    font-size: 1.1rem;
+  }
+
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 3rem;
+  }
+
+  .feature-item img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .feature-item h3 {
+    font-size: 1.15rem;
+  }
+
+  .feature-item p {
+    font-size: 0.95rem;
+  }
+}

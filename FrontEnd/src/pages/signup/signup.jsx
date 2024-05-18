@@ -2,6 +2,7 @@ import React from "react";
 import MainNav from "../../components/nav/nav";
 import SignInForm from "../../components/signinfom/signinform";
 import Footer from "../../components/footer/footer";
+import "../../pages/signup/signup.css";
 
 function Signup() {
   return (
