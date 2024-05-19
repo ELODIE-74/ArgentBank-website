@@ -8,11 +8,11 @@ function Error404() {
       <h1 className="TitleError404">404</h1>
       {/**indique à l'utilisateur que la page demandé n'est pas disponible */}
       <p className="TexteError404">
-        Oups!La page que vous demandez n'existe pas.
+        Il semblerait que la page que vous demandez n'existe pas.
       </p>
       {/**permet a l'utilisateur de revenir sur la page d'accueil lorsque que la page demandé n'est pas trouvé*/}
       <Link to="/" className="LinkError404">
-        Retourner sur la page d'accueil
+        Retourner sur la page d'accueil d'ArgentBank
       </Link>
     </section>
   );
