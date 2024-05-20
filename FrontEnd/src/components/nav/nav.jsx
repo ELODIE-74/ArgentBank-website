@@ -13,7 +13,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        <a className="main-nav-item" href="./signup">
+        <a className="main-nav-item" href="./signin">
           <i className="fa fa-user-circle"></i>
           Sign In
         </a>
