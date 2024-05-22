@@ -3,13 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // Action pour la connexion
 export const signIn = createAsyncThunk(
   "auth/signIn",
-  async (credentials, { rejectWithValue }) => {
+  async ({ credentials, token }, { rejectWithValue }) => {
     try {
       // Appel API pour la connexion
       const response = await fetch("http://localhost:3001/api/v1/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(credentials),
       });
