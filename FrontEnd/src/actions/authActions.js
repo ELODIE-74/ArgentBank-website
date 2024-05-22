@@ -15,7 +15,7 @@ export const signIn = createAsyncThunk(
       });
 
       if (!response.ok) {
-        // Gestion des erreurs de l'API
+        // Gestion des erreurs de l'API, transmettre correctment au  reducer
         const error = await response.json();
         return rejectWithValue(error);
       }

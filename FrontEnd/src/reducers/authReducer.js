@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signOut } from "../actions/authActions";
 
+//initialise l'état du Slice avec ces propriétées
 const initialState = {
   user: null,
   loading: false,
   error: null,
 };
 
+//gestion connexion / déconnexion + mise a jour de l'état(fullfiled), état user=null (indique sa déconnexion)
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -23,7 +25,10 @@ const authSlice = createSlice({
       })
       .addCase(signIn.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = {
+          status: action.payload.status,
+          message: action.payload.message,
+        };
       })
       .addCase(signOut.fulfilled, (state) => {
         state.user = null;

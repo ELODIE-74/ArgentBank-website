@@ -7,13 +7,13 @@ import { signIn } from "../../actions/authActions";
 function SignInForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [error, setError] = useState(null); // Ajoutez un état d'erreur
   useEffect(() => {
     if (user) {
-      navigate("/user");
+      navigate("../../pages/user/user");
     }
   }, [user, navigate]);
 
@@ -22,8 +22,7 @@ function SignInForm() {
     try {
       await dispatch(signIn({ username, password })).unwrap();
     } catch (error) {
-      // Gérer les erreurs de connexion
-      setError(error.message);
+      setError(error.message); // Mettez à jour l'état d'erreur
     }
   };
 
