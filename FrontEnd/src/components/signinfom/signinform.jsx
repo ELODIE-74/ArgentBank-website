@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { signIn } from "../../actions/authActions";
 
 function SignInForm() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loading, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -13,14 +13,14 @@ function SignInForm() {
   const [error, setError] = useState(null); // Ajoutez un état d'erreur
   useEffect(() => {
     if (user) {
-      navigate("../../pages/user/user");
+      navigate("/user");
     }
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(signIn({ username, password })).unwrap();
+      await dispatch(signIn({ email, password })).unwrap();
     } catch (error) {
       setError(error.message); // Mettez à jour l'état d'erreur
     }
@@ -37,8 +37,8 @@ function SignInForm() {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-wrapper">

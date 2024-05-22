@@ -3,29 +3,30 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // Action pour la connexion
 export const signIn = createAsyncThunk(
   "auth/signIn",
-  async ({ credentials, token }, { rejectWithValue }) => {
+  async ({ email, password }, thunkAPI) => {
     try {
       // Appel API pour la connexion
       const response = await fetch("http://localhost:3001/api/v1/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
         // Gestion des erreurs de l'API, transmettre correctment au  reducer
         const error = await response.json();
-        return rejectWithValue(error);
+        thunkAPI.rejectWithValue({ erreur: error.value });
+        console.log(error);
       }
 
       const user = await response.json();
       return user;
     } catch (error) {
       // Gestion des erreurs réseau
-      return rejectWithValue(error.message);
+      thunkAPI.rejectWithValue({ erreur: error.value });
+      console.log(error);
     }
   }
 );
