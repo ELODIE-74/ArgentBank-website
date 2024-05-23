@@ -22,7 +22,7 @@ function SignInForm() {
     try {
       await dispatch(signIn({ email, password })).unwrap();
     } catch (error) {
-      setError(error.message); // Mettez à jour l'état d'erreur
+      setError(error.message); // Mettre à jour l'état d'erreur
     }
   };
 
