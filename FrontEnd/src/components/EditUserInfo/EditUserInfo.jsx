@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../EditUserInfo/EditUserinfo.css";
 
 function EditUserInfo({
   isLoggedIn,
