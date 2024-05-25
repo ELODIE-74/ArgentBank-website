@@ -1,28 +1,45 @@
 import React, { useState } from "react";
 
-function EditUserInfo({ isLoggedIn, username, originalUserInfo }) {
+function EditUserInfo({
+  isLoggedIn,
+  username,
+  originalUserInfo,
+  onEditComplete,
+}) {
   const [firstName, setFirstName] = useState(originalUserInfo?.firstName || "");
   const [lastName, setLastName] = useState(originalUserInfo?.lastName || "");
+  const [newUsername, setNewUsername] = useState(username);
+  const [showForm, setShowForm] = useState(false);
 
   const handleSave = () => {
     // Logique de sauvegarde des modifications
     console.log("Informations utilisateur mises à jour avec succès !");
+    onEditComplete({ firstName, lastName, username: newUsername });
+    setShowForm(false);
   };
 
   const handleCancel = () => {
-    // Logique d'annulation
+    // Logique d'annulation des modifications
     setFirstName(originalUserInfo?.firstName || "");
     setLastName(originalUserInfo?.lastName || "");
+    setNewUsername(username);
+    setShowForm(false);
   };
 
+  /*retourne un formualire à remplir qui apparait au clic sur le bouton edit name et ces infos seront enregistrés et 
+  envoye au serveur sinon possibilité d'annuler cette modification, et de remettre les champs de saisie a zéro*/
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
       {isLoggedIn && (
         <div className="edit-user-info">
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" value={username} readOnly />
+            <input
+              type="text"
+              id="username"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
@@ -55,14 +72,5 @@ function EditUserInfo({ isLoggedIn, username, originalUserInfo }) {
     </div>
   );
 }
-
-const Header = ({ isLoggedIn }) => {
-  return (
-    <div>
-      {isLoggedIn && <h1>Header quand vous êtes connecté</h1>}
-      {!isLoggedIn && <h1>Header quand vous êtes déconnecté</h1>}
-    </div>
-  );
-};
 
 export default EditUserInfo;
