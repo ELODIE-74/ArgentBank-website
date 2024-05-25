@@ -17,8 +17,7 @@ function MainNavUser() {
           Tony
         </a>
         <a className="main-nav-item" href="/">
-          <i className="fa fa-sign-out"></i>
-          Sign Out
+          <i className="fas fa-power-off"></i>
         </a>
       </div>
     </nav>

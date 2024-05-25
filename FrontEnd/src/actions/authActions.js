@@ -30,20 +30,6 @@ export const signIn = createAsyncThunk(
     }
   }
 );
-/**
- *  export const updateUserInfo  = createAsynchThunk (
-« auth/signin/profile »
-asynch (username, firstname, lastname) = > {
-try
-// appel api pour les données du profil connecté
-const response = await fetch(« http://localhost:3001/api/v1/user/profile », {
-method : « POST »,
-headers : {
-« content-type » : « application/json »,
-},
-body : Json.stringify(username,firstname,lastname),
-)} 
- */
 
 // Action pour la déconnexion
 export const signOut = createAsyncThunk("auth/signOut", async () => {
