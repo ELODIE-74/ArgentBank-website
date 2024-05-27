@@ -1,29 +1,31 @@
 import React from "react";
 import logoConnected from "../../assets/image/logoconnecte.png";
-import "../headeruser/headeruser.css";
+import "../navuser/navuser.css";
 
 function MainNavUser() {
   return (
     <nav className="main-nav-connected">
       <div className="main-nav-left">
-        <a className="main-nav-logo" href="/">
+        <a className="main-nav-logo-position" href="/">
           <img
-            className="main-nav-logo-image"
+            className="main-nav-logo-connected"
             src={logoConnected}
             alt="Argent Bank Logo"
+            width={25}
+            height={25}
           />
         </a>
         <h1 className="main-nav-title">Argent Bank</h1>
       </div>
       <div className="main-nav-right">
-        <a className="main-nav-item" href="/user">
+        <a className="main-nav-item-connected" href="/user">
           <i className="fa fa-user-circle"></i>
           Ben Hong
         </a>
-        <a className="main-nav-item" href="/settings">
+        <a className="main-nav-item-connected" href="/settings">
           <i className="fas fa-cog"></i>
         </a>
-        <a className="main-nav-item" href="/">
+        <a className="main-nav-item-connected" href="/">
           <i className="fas fa-power-off"></i>
         </a>
       </div>
