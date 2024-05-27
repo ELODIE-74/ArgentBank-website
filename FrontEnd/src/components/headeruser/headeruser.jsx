@@ -13,7 +13,7 @@ function Header() {
     setShowEditForm(true); // Passer showEditForm à true pour afficher le formulaire
   };
 
-  const handleEditComplete = (updatedUserInfo) => {
+  const handleEditCompletefinish = (updatedUserInfo) => {
     setUserInfo(updatedUserInfo);
     setShowEditForm(false); // Passer showEditForm à false pour masquer le formulaire
     // Ici, on envoie les nouvelles informations au serveur
@@ -45,7 +45,7 @@ function Header() {
               lastName: userInfo.lastName,
               username: userInfo.username,
             }}
-            onEditComplete={handleEditComplete}
+            onEditComplete={handleEditCompletefinish}
           />
         </>
       )}

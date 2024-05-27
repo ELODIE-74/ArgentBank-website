@@ -20,7 +20,7 @@ function MainNavUser() {
       <div className="main-nav-right">
         <a className="main-nav-item-connected" href="/user">
           <i className="fa fa-user-circle"></i>
-          Ben Hong
+          Ben_hg
         </a>
         <a className="main-nav-item-connected" href="/settings">
           <i className="fas fa-cog"></i>
