@@ -1,22 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signOut } from "../actions/authActions";
 
-//initialise l'état du Slice avec ces propriétées
+// Définition de l'état initial du Slice
 const initialState = {
-  user: {
-    username: null, // Ajout de la propriété username
-    // Autres propriétés de l'utilisateur
-  },
+  user: null,
   loading: false,
   error: null,
 };
 
-//gestion connexion / déconnexion + mise a jour de l'état(fullfiled), état user=null (indique sa déconnexion)
+// Création du Slice "auth" avec les reducers
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder;
+    // Gestion de l'action signIn.pending
     builder
       .addCase(signIn.pending, (state) => {
         state.loading = true;
@@ -24,7 +23,11 @@ const authSlice = createSlice({
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = {
+          username: action.payload.username,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+        };
       })
       .addCase(signIn.rejected, (state, action) => {
         state.loading = false;

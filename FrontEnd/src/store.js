@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/authReducer";
+import updateprofilReducer from "./reducers/updateprofileReducer";
 
-//création du store redux(configureStore)
 const store = configureStore({
   reducer: {
-    auth: authReducer, //intégre le reducer de l'authentification dans le store global.
-    // Autres réducteurs de l'application
+    auth: authReducer,
+    updateprofile: updateprofilReducer,
   },
 });
 
