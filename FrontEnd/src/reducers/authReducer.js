@@ -3,7 +3,10 @@ import { signIn, signOut } from "../actions/authActions";
 
 //initialise l'état du Slice avec ces propriétées
 const initialState = {
-  user: null,
+  user: {
+    username: null, // Ajout de la propriété username
+    // Autres propriétés de l'utilisateur
+  },
   loading: false,
   error: null,
 };
@@ -33,29 +36,6 @@ const authSlice = createSlice({
       .addCase(signOut.fulfilled, (state) => {
         state.user = null;
       });
-    /*.addCase(updateUserInfo.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      
-      .addCase(updateUserInfo.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = {
-          ...state.user,
-          username: action.payload.username,
-          firstname: action.payload.firstname,
-          lastname: action.payload.lastname,
-        };
-      })
-      .addCase(updateUserInfo.rejected, (state, action) => {
-        state.loading = false;
-        state.error = {
-          status: action.payload.status,
-          message: action.payload.message,
-        };
-      });
-      
-      */
   },
 });
 

@@ -39,3 +39,26 @@ const updateprofilReducer = (state = initialState, action) => {
   }
 };
 export default updateprofilReducer;
+/*.addCase(updateUserInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = {
+          ...state.user,
+          username: action.payload.username,
+          firstname: action.payload.firstname,
+          lastname: action.payload.lastname,
+        };
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = {
+          status: action.payload.status,
+          message: action.payload.message,
+        };
+      });
+      
+      */
