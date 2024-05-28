@@ -58,3 +58,9 @@
   background-color: #4caf50;
   color: white;
 }
+.confirmation-message {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
