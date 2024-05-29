@@ -4,7 +4,7 @@ import logoConnected from "../../assets/image/logoconnecte.png";
 import "../navuser/navuser.css";
 
 function MainNavUser() {
-  const { user } = useSelector((state) => state.auth);
+  const { userinfo } = useSelector((state) => state.auth);
 
   return (
     <nav className="main-nav-connected">
@@ -23,7 +23,7 @@ function MainNavUser() {
       <div className="main-nav-right">
         <a className="main-nav-item-connected" href="/user">
           <i className="fa fa-user-circle"></i>
-          {user && user.username ? user.username : ""}
+          {userinfo && userinfo.username ? userinfo.username : ""}
         </a>
         <a className="main-nav-item-connected" href="/settings">
           <i className="fas fa-cog"></i>

@@ -1,4 +1,5 @@
 // actions/updateprofilAction.js
+import { createAsyncThunk } from "@reduxjs/toolkit";
 // début de requête de mse à jour (demande d'envoi)
 export const UPDATE_USER_PROFILE_START = "UPDATE_USER_PROFILE_START";
 // si  réponse API retourne OK = success
@@ -6,8 +7,34 @@ export const UPDATE_USER_PROFILE_SUCCESS = "UPDATE_USER_PROFILE_SUCCESS";
 // gestion des erreurs dans la requête en cas d'échec
 export const UPDATE_USER_PROFILE_ERROR = "UPDATE_USER_PROFILE_ERROR";
 
+// Action asynchrone pour la mise à jour du profil de l'utilisateur
+export const updateUserProfile = createAsyncThunk(
+  "user/updateProfile",
+  async (updatedUserInfo, thunkAPI) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/user/profil", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUserInfo),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue({ erreur: error.value });
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ erreur: error.message });
+    }
+  }
+);
+
 //mettre une méthode asynchrone pour mieux gérer les promesses, début de requête
-export const updateUserProfile = (updatedUserInfo) => async (dispatch) => {
+/*export const updateUserProfile = (updatedUserInfo) => async (dispatch) => {
   dispatch({ type: UPDATE_USER_PROFILE_START });
 
   try {
@@ -30,4 +57,4 @@ export const updateUserProfile = (updatedUserInfo) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: UPDATE_USER_PROFILE_ERROR, payload: error.message });
   }
-};
+};*/
