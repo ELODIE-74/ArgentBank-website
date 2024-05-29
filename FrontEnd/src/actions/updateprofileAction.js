@@ -1,11 +1,9 @@
 // actions/updateprofilAction.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// début de requête de mse à jour (demande d'envoi)
-export const UPDATE_USER_PROFILE_START = "UPDATE_USER_PROFILE_START";
-// si  réponse API retourne OK = success
-export const UPDATE_USER_PROFILE_SUCCESS = "UPDATE_USER_PROFILE_SUCCESS";
-// gestion des erreurs dans la requête en cas d'échec
-export const UPDATE_USER_PROFILE_ERROR = "UPDATE_USER_PROFILE_ERROR";
+
+export const UPDATE_USER_PROFILE_START = "UPDATE_USER_PROFILE_START"; // début de requête de mse à jour (demande d'envoi)
+export const UPDATE_USER_PROFILE_SUCCESS = "UPDATE_USER_PROFILE_SUCCESS"; // si  réponse API retourne OK = success
+export const UPDATE_USER_PROFILE_ERROR = "UPDATE_USER_PROFILE_ERROR"; // gestion des erreurs dans la requête en cas d'échec
 
 // Action asynchrone pour la mise à jour du profil de l'utilisateur
 export const updateUserProfile = createAsyncThunk(
