@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  token: null,
 };
 
 // Création du Slice "auth" avec les reducers
@@ -24,11 +25,7 @@ const authSlice = createSlice({
       // gestion des valeurs / propriétées
       .addCase(signIn.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = {
-          username: action.payload.username,
-          firstName: action.payload.firstName,
-          lastName: action.payload.lastName,
-        };
+        state.token = action.payload.token;
       })
       //rejet en cas d'erreur et message d'erreur
       .addCase(signIn.rejected, (state, action) => {

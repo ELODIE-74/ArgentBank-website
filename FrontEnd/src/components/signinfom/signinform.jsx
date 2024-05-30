@@ -11,11 +11,6 @@ function SignInForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState(null); // Ajoutez un état d'erreur
-  useEffect(() => {
-    if (user) {
-      navigate("/user");
-    }
-  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

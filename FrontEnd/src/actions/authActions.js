@@ -21,8 +21,8 @@ export const signIn = createAsyncThunk(
         console.log(error);
       }
 
-      const user = await response.json();
-      return user;
+      const data = await response.json();
+      return data.body.token;
     } catch (error) {
       // Gestion des erreurs réseau
       thunkAPI.rejectWithValue({ erreur: error.value });
