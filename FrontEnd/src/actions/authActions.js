@@ -1,4 +1,28 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }) => {
+    const response = await fetch("http://localhost:3001/api/v1/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la connexion");
+    }
+
+    const data = await response.json();
+    const token = data.token;
+    localStorage.setItem("accessToken", token);
+    return data;
+  }
+);
+
+/*import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // Action pour la connexion
 export const signIn = createAsyncThunk(
@@ -41,3 +65,4 @@ export const signOut = createAsyncThunk("auth/signOut", async () => {
   // Retourne un objet vide pour indiquer que la déconnexion a réussi
   return {};
 });
+*/

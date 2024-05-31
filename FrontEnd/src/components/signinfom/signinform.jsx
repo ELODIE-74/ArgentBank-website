@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { signIn } from "../../actions/authActions";
+import { login } from "../../actions/authActions";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, user } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError] = useState(null); // Ajoutez un état d'erreur
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(signIn({ email, password })).unwrap();
+      await dispatch(login({ email, password })).unwrap();
+      navigate("/user"); // Redirigez l'utilisateur vers la page d'accueil après une connexion réussie
     } catch (error) {
-      setError(error.message); // Mettre à jour l'état d'erreur
+      // Gérez l'erreur d'authentification ici
     }
   };
 

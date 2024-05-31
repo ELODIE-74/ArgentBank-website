@@ -1,43 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signIn, signOut } from "../actions/authActions";
+import { login } from "../actions/authActions";
+// Importez l'action 'login'
 
-// Définition de l'état initial du Slice
-const initialState = {
-  user: null,
-  loading: false,
-  error: null,
-  token: null,
-};
-
-// Création du Slice "auth" avec les reducers
 const authSlice = createSlice({
   name: "auth",
-  initialState,
-  reducers: {},
+  initialState: {
+    user: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    // Autres réducteurs si nécessaire
+  },
   extraReducers: (builder) => {
-    builder;
-    // Gestion de l'action signIn.pending (connexion)
     builder
-      .addCase(signIn.pending, (state) => {
+      //gestion de l'état de la connexion
+      .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      // gestion des valeurs / propriétées
-      .addCase(signIn.fulfilled, (state, action) => {
+      //gestion de la connexion réussi avec redirection sur la page user
+      .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.token = action.payload.token;
+        state.user = action.payload;
       })
-      //rejet en cas d'erreur et message d'erreur
-      .addCase(signIn.rejected, (state, action) => {
+      //gestion de l'état en cas d'erreur lors de l'authentification
+      .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = {
-          status: action.payload.status,
-          message: action.payload.message,
-        };
-      })
-      //statut de l'utilisateur(user) pour la déconnexion
-      .addCase(signOut.fulfilled, (state) => {
-        state.user = null;
+        state.error = action.error.message;
       });
   },
 });
