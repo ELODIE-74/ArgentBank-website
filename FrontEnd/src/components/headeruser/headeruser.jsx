@@ -1,7 +1,13 @@
-import React from "react";
-//import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
+import React, { useState } from "react";
+import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
 
 function Header() {
+  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
+
+  const handleEditNameClick = () => {
+    setShowEditUserInfo(true);
+  };
+
   return (
     <div className="header">
       <h1>
@@ -9,7 +15,10 @@ function Header() {
         <br />
         Tony Jarvis
       </h1>
-      <button className="edit-button">Edit name</button>
+      <button className="edit-button" onClick={handleEditNameClick}>
+        Edit name
+      </button>
+      {showEditUserInfo && <EditUserInfo />}
     </div>
   );
 }

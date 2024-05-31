@@ -19,11 +19,11 @@ const EditUserInfo = () => {
   };
 
   const handleSave = () => {
-    // Ajouter la logique de sauvegarde ici
+    // Logique de sauvegarde des données
   };
 
   const handleCancel = () => {
-    // Ajouter la logique d'annulation ici
+    // Réinitialiser les données du formulaire si nécessaire
   };
 
   return (

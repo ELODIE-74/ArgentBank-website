@@ -56,15 +56,4 @@ export const signIn = createAsyncThunk(
     }
   }
 );
-
-// Action pour la déconnexion
-export const signOut = createAsyncThunk("auth/signOut", async () => {
-  // Appel API pour la déconnexion
-  await fetch("/api/logout", {
-    method: "POST",
-  });
-
-  // Retourne un objet vide pour indiquer que la déconnexion a réussi
-  return {};
-});
 */
