@@ -24,6 +24,32 @@ export const login = createAsyncThunk(
   }
 );
 
+// Thunk pour récupérer le profil de l'utilisateur
+export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (_, { getState }) => {
+    const { accessToken } = getState().auth;
+
+    const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      // Si la réponse n'est pas ok, nous lançons une erreur
+      throw new Error(
+        "Erreur lors de la récupération du profil de l'utilisateur"
+      );
+    }
+
+    const data = await response.json();
+    // Retourne les données contenant le nom d'utilisateur (username)
+    return data;
+  }
+);
+
 /*import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // Action pour la connexion
