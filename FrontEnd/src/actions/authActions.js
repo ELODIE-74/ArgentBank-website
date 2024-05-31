@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }) => {
+    //appel API pour récupérer le token lors de l'authentification par le biais de l'email et du mot de passe
     const response = await fetch("http://localhost:3001/api/v1/user/login", {
       method: "POST",
       headers: {
@@ -16,8 +17,9 @@ export const login = createAsyncThunk(
     }
 
     const data = await response.json();
+    //affichage du jeton d'authentification (token)
     const token = data.token;
-    localStorage.setItem("accessToken", token);
+    localStorage.setItem("accessToken", token); // stockage du jeton
     return data;
   }
 );

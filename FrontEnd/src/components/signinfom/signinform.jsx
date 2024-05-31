@@ -17,6 +17,7 @@ function SignInForm() {
       navigate("/user"); // Redirigez l'utilisateur vers la page d'accueil après une connexion réussie
     } catch (error) {
       // Gérez l'erreur d'authentification ici
+      navigate("/error404");
     }
   };
 
