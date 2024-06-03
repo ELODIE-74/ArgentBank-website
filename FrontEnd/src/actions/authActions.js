@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { useState } from "react";
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }) => {
@@ -28,13 +28,14 @@ export const login = createAsyncThunk(
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (_, { getState }) => {
-    const { accessToken } = getState().auth;
+    const { accessToken, userName } = getState().auth;
 
     const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-      method: "GET",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      body: JSON.stringify({ userName }),
     });
 
     if (!response.ok) {
