@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useState } from "react";
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }) => {
@@ -50,6 +50,32 @@ export const fetchUserProfile = createAsyncThunk(
     return data;
   }
 );
+
+/*export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (_, { getState }) => {
+    const { accessToken, userName } = getState().auth;
+
+    const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ userName }),
+    });
+
+    if (!response.ok) {
+      // Si la réponse n'est pas ok, nous lançons une erreur
+      throw new Error(
+        "Erreur lors de la récupération du profil de l'utilisateur"
+      );
+    }
+
+    const data = await response.json();
+    // Retourne les données contenant le nom d'utilisateur (username)
+    return data;
+  }
+);*/
 
 /*import { createAsyncThunk } from "@reduxjs/toolkit";
 
