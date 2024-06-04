@@ -13,7 +13,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.accessToken = null;
-      state.username = email;
+      state.username = null;
       localStorage.removeItem("accessToken");
     },
   },

@@ -23,19 +23,43 @@ export const login = createAsyncThunk(
     return data;
   }
 );
-
 // Thunk pour récupérer le profil de l'utilisateur
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
+  async (_, { getState, dispatch }) => {
+    const { accessToken, username } = getState().auth;
+
+    const response = await fetch(`http://localhost:3001/api/v1/user/profile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ username }),
+    });
+
+    if (!response.ok) {
+      // Si la réponse n'est pas ok, nous lançons une erreur
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
+    const data = await response.json();
+    // Retourne les données contenant le profil de l'utilisateur
+    return data;
+  }
+);
+/*export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
   async (_, { getState }) => {
-    const { accessToken, userName } = getState().auth;
+    const { accessToken, id } = getState().auth;
 
     const response = await fetch("http://localhost:3001/api/v1/user/profile", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ userName }),
+      body: JSON.stringify({ id }),
     });
 
     if (!response.ok) {
@@ -49,7 +73,7 @@ export const fetchUserProfile = createAsyncThunk(
     // Retourne les données contenant le nom d'utilisateur (username)
     return data;
   }
-);
+);*/
 
 /*export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
