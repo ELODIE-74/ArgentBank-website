@@ -18,9 +18,7 @@ function SignInForm() {
         dispatch(fetchUserProfile(accessToken));
         navigate("/user"); // Redirigez l'utilisateur vers la page d'accueil après une connexion réussie
       })
-      .catch((error) => {
-        navigate("/error404");
-      });
+      .catch((error) => {});
   };
 
   return (
