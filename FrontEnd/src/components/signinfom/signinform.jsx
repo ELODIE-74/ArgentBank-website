@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../actions/authActions";
+import { fetchUserProfile, login } from "../../actions/authActions";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
@@ -12,13 +12,15 @@ function SignInForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(login({ email, password })).unwrap();
-      navigate("/user"); // Redirigez l'utilisateur vers la page d'accueil après une connexion réussie
-    } catch (error) {
-      // Gérez l'erreur d'authentification ici
-      navigate("/error404");
-    }
+    dispatch(login({ email, password }))
+      .then((data) => {
+        const accessToken = data.body.token;
+        dispatch(fetchUserProfile(accessToken));
+        navigate("/user"); // Redirigez l'utilisateur vers la page d'accueil après une connexion réussie
+      })
+      .catch((error) => {
+        navigate("/error404");
+      });
   };
 
   return (

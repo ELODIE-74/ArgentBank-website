@@ -26,9 +26,7 @@ export const login = createAsyncThunk(
 // Thunk pour récupérer le profil de l'utilisateur
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
-  async (_, { getState, dispatch }) => {
-    const { accessToken, username } = getState().auth;
-
+  async (accessToken) => {
     const response = await fetch(`http://localhost:3001/api/v1/user/profile`, {
       method: "POST",
       headers: {
