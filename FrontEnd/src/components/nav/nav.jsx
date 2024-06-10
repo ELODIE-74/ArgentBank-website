@@ -1,7 +1,13 @@
-// MainNav.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function MainNav() {
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    navigate("/signin");
+  };
+
   return (
     <nav className="main-nav">
       <a className="main-nav-logo" href="/">
@@ -13,7 +19,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        <a className="main-nav-item" href="./signin">
+        <a className="main-nav-item" href="#" onClick={handleSignIn}>
           <i className="fa fa-user-circle"></i>
           Sign In
         </a>

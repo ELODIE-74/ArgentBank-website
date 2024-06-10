@@ -1,4 +1,66 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+//fichier authActions
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const data = await response.json();
+      const token = data.token;
+      localStorage.setItem("accessToken", token);
+      return data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+
+export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+/*import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -23,30 +85,28 @@ export const login = createAsyncThunk(
     return data;
   }
 );
-// Thunk pour récupérer le profil de l'utilisateur
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
-  async (accessToken) => {
+  async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
     const response = await fetch(`http://localhost:3001/api/v1/user/profile`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ username }),
     });
 
     if (!response.ok) {
-      // Si la réponse n'est pas ok, nous lançons une erreur
       const error = await response.json();
       throw new Error(error.message);
     }
 
     const data = await response.json();
-    // Retourne les données contenant le profil de l'utilisateur
     return data;
   }
-);
+);*/
 /*export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (_, { getState }) => {
