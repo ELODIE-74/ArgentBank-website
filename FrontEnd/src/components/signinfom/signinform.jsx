@@ -22,6 +22,13 @@ const SignInForm = () => {
       navigate("/error404"); // Gérer les erreurs de connexion
     }
   };
+  /**const userData = {
+email,
+password,
+firstName,
+lastName,
+username
+}; */
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +42,7 @@ const SignInForm = () => {
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="userName">Email</label>
           <input
             type="email"
             id="email"
