@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
 
     const data = await response.json();
     //affichage du jeton d'authentification (token)
-    const token = data.token;
+    const token = data.body.token;
     //vérification du jeton d'authentification
     console.log("accessToken", token);
     localStorage.setItem("accessToken", token); // stockage du jeton
@@ -29,9 +29,8 @@ export const login = createAsyncThunk(
 //appel api pour récupérer les données du profil utilisateur
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
-  async () => {
+  async (accessToken) => {
     //récupération du jeton d'authentification
-    const accessToken = localStorage.getItem("accessToken");
     console.log("accessToken", accessToken);
     //si jeton pas trouvé (token)
     if (!accessToken) {

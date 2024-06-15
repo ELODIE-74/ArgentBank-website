@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchUserProfile, login } from "../../actions/authActions";
-//import{userProfilData} from "../../actions/authActions";
+
 const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +16,10 @@ const SignInForm = () => {
     dispatch(login({ email, password }))
       .then((data) => {
         // Récupération du token depuis le payload lors de l'authentification
-        const accessToken = data.payload.token;
-        return dispatch(fetchUserProfile(accessToken));
+        const accessToken = data.body.token;
+        dispatch(fetchUserProfile(accessToken)).then(() => navigate("/user"));
       })
-      .then((userProfileData) => {
-        // userData contient les informations du profil de l'utilisateur
-        /**
-         * const userProfildData = data.payload.userData;
-         * return dispatch(fetchUserProfile(userData));  */
-        navigate("/user"); // Redirection vers la page du profil de l'utilisateur
-      })
+
       .catch((error) => {
         navigate("/error404"); // Gérer les erreurs de connexion
       });
