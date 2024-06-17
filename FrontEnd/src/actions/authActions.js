@@ -27,6 +27,7 @@ export const login = createAsyncThunk(
     return data;
   }
 );
+//Avec cette modification, la fonction fetchUserProfile retourne directement l'objet userData complet dans la réponse de l'api.
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (accessToken) => {
