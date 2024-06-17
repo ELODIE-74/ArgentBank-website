@@ -11,7 +11,18 @@ const SignInForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      await dispatch(login({ email, password }));
+      const accessToken = localStorage.getItem("accessToken");
+      await dispatch(fetchUserProfile(accessToken));
+      navigate("/user");
+    } catch (err) {
+      navigate("/error");
+    }
+  };
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }))
       .then((data) => {
@@ -23,8 +34,7 @@ const SignInForm = () => {
       .catch((error) => {
         navigate("/error404"); // Gérer les erreurs de connexion
       });
-  };
-
+  };*/
   return (
     <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>

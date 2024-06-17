@@ -26,8 +26,46 @@ export const login = createAsyncThunk(
     return data;
   }
 );
-//appel api pour récupérer les données du profil utilisateur
 export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (accessToken) => {
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const userData = await response.json();
+      const { email, firstName, lastName, userName } = userData;
+      const userProfileData = {
+        email,
+        firstName,
+        lastName,
+        userName,
+      };
+      return userProfileData;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+//appel api pour récupérer les données du profil utilisateur
+/*export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (accessToken) => {
     //récupération du jeton d'authentification
@@ -68,7 +106,7 @@ export const fetchUserProfile = createAsyncThunk(
       throw new Error(error.message); //si mauvais renvoie des données
     }
   }
-);
+);*/
 /*import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(
