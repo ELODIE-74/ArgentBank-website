@@ -1,4 +1,3 @@
-//composant headeruser
 import React, { useState, useEffect } from "react";
 import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,8 +5,7 @@ import { fetchUserProfile } from "../../actions/authActions";
 
 function Header() {
   const [showEditUserInfo, setShowEditUserInfo] = useState(false);
-  const userProfile = useSelector((state) => state.auth.userProfile);
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const { userProfile, accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleEditNameClick = () => {
