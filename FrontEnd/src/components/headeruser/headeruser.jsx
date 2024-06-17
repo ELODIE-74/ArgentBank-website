@@ -1,5 +1,48 @@
 //composant headeruser
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../actions/authActions";
+
+function Header() {
+  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
+  const userProfile = useSelector((state) => state.auth.userProfile);
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const dispatch = useDispatch();
+
+  const handleEditNameClick = () => {
+    setShowEditUserInfo(true);
+  };
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(fetchUserProfile(accessToken));
+    }
+  }, [dispatch, accessToken]);
+
+  return (
+    <div className="header">
+      {userProfile ? (
+        <>
+          <h1>
+            Welcome back
+            <br />
+            {userProfile.userName}
+          </h1>
+          <button className="edit-button" onClick={handleEditNameClick}>
+            Edit name
+          </button>
+          {showEditUserInfo && <EditUserInfo />}
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+}
+export default Header;
+
+/*import React, { useState } from "react";
 import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
 import { useSelector } from "react-redux";
 function Header() {
@@ -24,7 +67,7 @@ function Header() {
     </div>
   );
 }
-export default Header;
+export default Header;*/
 /*En utilisant useSelector, vous pouvez accéder au champ username de l'état auth dans votre Redux store. 
 Cela vous permet d'afficher le nom d'utilisateur dans votre composant Header une fois qu'il est récupéré depuis le store.
 Avec ces ajustements, votre composant Header devrait maintenant afficher le nom de l'utilisateur une fois qu'il est connecté 

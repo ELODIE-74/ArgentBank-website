@@ -8,6 +8,7 @@ const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loading, error } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +29,9 @@ const SignInForm = () => {
       .then((data) => {
         // Récupération du token depuis le payload lors de l'authentification
         const accessToken = data.body.token;
-        dispatch(fetchUserProfile(accessToken)).then(() => navigate("/user"));
+        dispatch(fetchUserProfile(accessToken)).then(() => {
+          return navigate("/user");
+        });
       })
 
       .catch((error) => {

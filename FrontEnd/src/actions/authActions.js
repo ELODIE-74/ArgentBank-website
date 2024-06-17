@@ -23,6 +23,7 @@ export const login = createAsyncThunk(
     //vérification du jeton d'authentification
     console.log("accessToken", token);
     localStorage.setItem("accessToken", token); // stockage du jeton
+
     return data;
   }
 );
@@ -51,19 +52,54 @@ export const fetchUserProfile = createAsyncThunk(
       }
 
       const userData = await response.json();
-      const { email, firstName, lastName, userName } = userData;
-      const userProfileData = {
-        email,
-        firstName,
-        lastName,
-        userName,
-      };
-      return userProfileData;
+
+      return userData;
     } catch (error) {
       throw new Error(error.message);
     }
   }
 );
+/*export const fetchUserProfile = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (accessToken) => {
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const userData = await response.json();
+      const { id, email, firstName, lastName, userName } = userData;
+      const userProfileData = {
+        id,
+        email,
+        firstName,
+        lastName,
+        userName,
+      };
+      debugger; // point d'arrêt 2
+      return userProfileData;
+    } catch (error) {
+      debugger; // point d'arrêt 3
+      throw new Error(error.message);
+    }
+  }
+);*/
 //appel api pour récupérer les données du profil utilisateur
 /*export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
