@@ -56,11 +56,16 @@ const authSlice = createSlice({
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.userProfile = {
-          id: action.payload.id,
+          id: action.payload.body.id,
+          email: action.payload.body.email,
+          firstName: action.payload.body.firstName,
+          lastName: action.payload.body.lastName,
+          userName: action.payload.body.userName,
+          /*id: action.payload.id,
           email: action.payload.email,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
-          userName: action.payload.userName,
+          userName: action.payload.userName,*/
         };
       })
       //Met à jour l'état avec le statut "failed" et le message d'erreur lorsque l'action fetchUserProfile échoue.
