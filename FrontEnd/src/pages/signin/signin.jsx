@@ -1,3 +1,4 @@
+//Le composant Signin importe trois composants enfants : MainNav, SignInForm, et Footer.
 import React from "react";
 import MainNav from "../../components/nav/nav";
 import SignInForm from "../../components/signinfom/signinform";
@@ -17,3 +18,5 @@ function Signin() {
 }
 
 export default Signin;
+/**Le composant Signin est responsable de la gestion de l'état du formulaire,
+ * de la validation des entrées, et de l'envoi des informations d'authentification au serveur. */

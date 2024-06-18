@@ -12,3 +12,6 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+/**Le composant Provider de Redux est utilisé pour injecter le store Redux dans l'arbre des composants.
+Enfin, le composant racine App est rendu dans le Provider. */

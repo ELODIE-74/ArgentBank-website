@@ -1,3 +1,4 @@
+//UserPage importe plusieurs composants enfants : MainNavUser, Account, Header, et Footer.
 import React from "react";
 import MainNavUser from "../../components/navuser/navuser";
 import Account from "../../components/account/account";
@@ -34,3 +35,8 @@ function UserPage() {
 }
 
 export default UserPage;
+/**MainNavUser = il s'agit d'une barre de navigation spécifique à l'utilisateur, différente de la barre de navigation principale (MainNav) mode connecté.
+ * Header = il affiche des informations spécifiques à l'utilisateur, comme son nom, son profil.
+ * Account = affiche le titre du compte, le montant disponible, et une description.
+ * Footer = pied de la page
+ */

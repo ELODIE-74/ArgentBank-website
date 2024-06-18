@@ -1,3 +1,4 @@
+// import de plusieurs composants enfants : MainNav, Hero, FeatureItem, et Footer.
 import React from "react";
 import MainNav from "../../components/nav/nav";
 import Hero from "../../components/hero/hero";
@@ -5,6 +6,7 @@ import FeatureItem from "../../components/featureitem/featureitem";
 import Footer from "../../components/footer/footer";
 import "../../pages/home/home.css";
 
+//affichage des rendus des composants MainNav/Hero/FeatureItem/Footer lorsqu'on les appellent dans la page
 function Home() {
   return (
     <div>

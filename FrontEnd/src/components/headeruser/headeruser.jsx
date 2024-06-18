@@ -1,23 +1,36 @@
+/** import des hooks useState et useEffect de React, ainsi que le composant EditUserInfo. */
 import React, { useState, useEffect } from "react";
 import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
+//import des hooks useSelector et useDispatch de Redux, qui permettent d'accéder à l'état global de l'application et de déclencher des actions.
 import { useSelector, useDispatch } from "react-redux";
+//importe l'action fetchUserProfile depuis le fichier authActions.js.
 import { fetchUserProfile } from "../../actions/authActions";
 
 function Header() {
+  //code initialise un état local avec le hook useState. showEditUserInfo est utilisé pour contrôler l'affichage du composant EditUserInfo.
   const [showEditUserInfo, setShowEditUserInfo] = useState(false);
+  //code utilise le hook useSelector pour extraire les propriétés userProfile et accessToken de l'état global de l'application (stocké dans le store Redux).
   const { userProfile, accessToken } = useSelector((state) => state.auth);
+  //code utilise le hook useDispatch pour obtenir une référence à la fonction dispatch de Redux, qui permet de déclencher des actions.
   const dispatch = useDispatch();
 
+  /*fonction est appelée lorsque l'utilisateur clique sur le bouton "Edit name". 
+  Elle définit la valeur de showEditUserInfo à true pour afficher le composant EditUserInfo.*/
   const handleEditNameClick = () => {
     setShowEditUserInfo(true);
   };
 
+  /**hook useEffect est appelé lorsque le composant est monté ou que les dépendances dispatch ou accessToken changent.
+   * Il déclenche l'action fetchUserProfile avec le accessToken pour récupérer le profil de l'utilisateur. */
   useEffect(() => {
     if (accessToken) {
       dispatch(fetchUserProfile(accessToken));
     }
   }, [dispatch, accessToken]);
-
+  //section contient le code JSX qui définit le rendu du composant.
+  /**{userProfile ? = Si userProfile existe, le composant affiche un message de bienvenue avec le nom de l'utilisateur,
+   * un bouton "Edit name" et le composant EditUserInfo si showEditUserInfo est vrai.
+   * Si userProfile est null, le composant affiche un message "Loading...".*/
   return (
     <div className="header">
       {userProfile ? (
@@ -39,125 +52,3 @@ function Header() {
   );
 }
 export default Header;
-
-/*import React, { useState } from "react";
-import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
-import { useSelector } from "react-redux";
-function Header() {
-  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
-  const userName = useSelector((state) => state.auth.userName);
-
-  const handleEditNameClick = () => {
-    setShowEditUserInfo(true);
-  };
-
-  return (
-    <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        {userName}
-      </h1>
-      <button className="edit-button" onClick={handleEditNameClick}>
-        Edit name
-      </button>
-      {showEditUserInfo && <EditUserInfo />}
-    </div>
-  );
-}
-export default Header;*/
-/*En utilisant useSelector, vous pouvez accéder au champ username de l'état auth dans votre Redux store. 
-Cela vous permet d'afficher le nom d'utilisateur dans votre composant Header une fois qu'il est récupéré depuis le store.
-Avec ces ajustements, votre composant Header devrait maintenant afficher le nom de l'utilisateur une fois qu'il est connecté 
-et que cette information est disponible dans votre Redux store.*/
-
-/*function Header() {
-  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
-  const [fetchUserProfile] = useState(""); // Ajoutez cette ligne pour initialiser la variable username
-
-  const handleEditNameClick = () => {
-    setShowEditUserInfo(true);
-  };
-
-  return (
-    <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        {fetchUserProfile} 
-      </h1>
-      <button className="edit-button" onClick={handleEditNameClick}>
-        Edit name
-      </button>
-      {showEditUserInfo && <EditUserInfo />}
-    </div>
-  );
-}
-
-export default Header;*/
-
-/*import React, { useState } from "react";
-
-import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
-
-function Header() {
-  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
-
-  const handleEditNameClick = () => {
-    setShowEditUserInfo(true);
-  };
-
-  return (
-    <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        {username}
-      </h1>
-      <button className="edit-button" onClick={handleEditNameClick}>
-        Edit name
-      </button>
-      {showEditUserInfo && <EditUserInfo />}
-    </div>
-  );
-}
-
-export default Header;*/
-
-/*import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
-import { fetchUserProfile } from "../../actions/authActions";
-
-function Header() {
-  const dispatch = useDispatch();
-  const { username, status } = useSelector((state) => state.auth);
-  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
-
-  const handleEditNameClick = () => {
-    setShowEditUserInfo(true);
-  };
-
-  // Récupérer le profil de l'utilisateur au montage du composant
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchUserProfile(username));
-    }
-  }, [dispatch, status]);
-
-  return (
-    <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        {username}
-      </h1>
-      <button className="edit-button" onClick={handleEditNameClick}>
-        Edit name
-      </button>
-      {showEditUserInfo && <EditUserInfo />}
-    </div>
-  );
-}
-
-export default Header;*/
