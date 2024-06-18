@@ -63,3 +63,36 @@ export const fetchUserProfile = createAsyncThunk(
     }
   }
 );
+//mise a jour et envoie a swagger du nouveau userName
+export const updateUsername = createAsyncThunk(
+  "auth/fetchUserProfile",
+  async (accessToken) => {
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      //Si le jeton d'authentification n'est pas fourni, affichage d'un message d'erreur.
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      //Avec cette modification, la fonction fetchUserProfile retourne directement l'objet userData complet dans la réponse de l'api.
+      const userData = await response.json();
+      //Si la réponse est ok (code HTTP 200), elle extrait les données de l'utilisateur de la réponse et les retourne.
+      return userData;
+    } catch (error) {
+      throw new Error(error.message); //Si la réponse n'est pas ok, elle extrait le message d'erreur de la réponse affiche l'erreur.
+    }
+  }
+);
