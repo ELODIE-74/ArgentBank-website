@@ -56,6 +56,7 @@ export const fetchUserProfile = createAsyncThunk(
       }
       //Avec cette modification, la fonction fetchUserProfile retourne directement l'objet userData complet dans la réponse de l'api.
       const userData = await response.json();
+      console.log(userData);
       //Si la réponse est ok (code HTTP 200), elle extrait les données de l'utilisateur de la réponse et les retourne.
       return userData;
     } catch (error) {
