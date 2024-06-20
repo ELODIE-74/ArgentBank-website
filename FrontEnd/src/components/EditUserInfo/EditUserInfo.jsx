@@ -24,13 +24,18 @@ const EditUserInfo = () => {
     }
   }, [userProfile]);
 
+  const handleEditName = () => {
+    setIsFormVisible(true);
+    setUsername(userProfile?.userName || "");
+  };
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
   const handleSave = async () => {
     try {
-      await dispatch(updateUsername(userName, accessToken));
+      await dispatch(updateUsername(accessToken, userName));
       setMessage("Informations enregistrées avec succès !");
       setIsFormVisible(false);
     } catch (error) {
@@ -39,7 +44,7 @@ const EditUserInfo = () => {
   };
 
   const handleCancel = () => {
-    setUsername(userProfile?.userName || "");
+    setUsername(userProfile.userName);
     setMessage("Modifications annulées.");
     setIsFormVisible(false);
   };
@@ -72,7 +77,7 @@ const EditUserInfo = () => {
         />
       </div>
       <div>
-        <label htmlFor="userName">User Name:</label>
+        <label htmlFor="userName">UserName:</label>
         <input
           type="text"
           id="userName"
@@ -96,6 +101,38 @@ const EditUserInfo = () => {
 };
 
 export default EditUserInfo;
+/*useEffect(() => {
+    if (accessToken) {
+      dispatch(updateUsername(accessToken, userProfile));
+    }
+  }, [dispatch, accessToken, userProfile]);
+
+  useEffect(() => {
+    if (userProfile) {
+      setUsername(userProfile.userName);
+    }
+  }, [userProfile]);
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handleSave = async () => {
+    try {
+      await dispatch(updateUsername(userName, accessToken));
+      setMessage("Informations enregistrées avec succès !");
+      setIsFormVisible(false);
+    } catch (error) {
+      setMessage("Une erreur est survenue lors de l'enregistrement.");
+    }
+  };
+
+  const handleCancel = () => {
+    setUsername(userProfile?.userName || "");
+    setMessage("Modifications annulées.");
+    setIsFormVisible(false);
+  };*/
+
 /*import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"; //interagir avec le store Redux.
 import { fetchUserProfile, updateUsername } from "../../actions/authActions"; //importe deux actions Redux liées à l'authentification : fetchUserProfile et updateUsername.

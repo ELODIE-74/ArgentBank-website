@@ -72,9 +72,19 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+      .addCase(updateUsername.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(updateUsername.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.userProfile = action.payload.body.userName;
+        state.userProfile = {
+          ...state.userProfile,
+          userName: action.payload.body.userName,
+        };
+      })
+      .addCase(updateUsername.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

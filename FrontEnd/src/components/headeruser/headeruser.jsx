@@ -4,7 +4,7 @@ import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
 //import des hooks useSelector et useDispatch de Redux, qui permettent d'accéder à l'état global de l'application et de déclencher des actions.
 import { useSelector, useDispatch } from "react-redux";
 //importe l'action fetchUserProfile depuis le fichier authActions.js.
-import { fetchUserProfile } from "../../actions/authActions";
+import { fetchUserProfile, updateUsername } from "../../actions/authActions";
 
 function Header() {
   //code initialise un état local avec le hook useState. showEditUserInfo est utilisé pour contrôler l'affichage du composant EditUserInfo.
