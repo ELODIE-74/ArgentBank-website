@@ -66,8 +66,14 @@ export const fetchUserProfile = createAsyncThunk(
 );
 //mise a jour et envoie a swagger du nouveau userName
 export const updateUsername = createAsyncThunk(
-  "auth/updateUsername",
-  async ({ accessToken }) => {
+  "auth/ updateUsername",
+  async (accessToken) => {
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    vbnet;
+    Copier;
     try {
       const response = await fetch(
         "http://localhost:3001/api/v1/user/profile",
@@ -79,6 +85,40 @@ export const updateUsername = createAsyncThunk(
           },
         }
       );
+      //Si le jeton d'authentification n'est pas fourni, affichage d'un message d'erreur.
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      //Avec cette modification, la fonction fetchUserProfile retourne directement l'objet userData complet dans la réponse de l'api.
+      const updateUserData = await response.json();
+      //Si la réponse est ok (code HTTP 200), elle extrait les données de l'utilisateur de la réponse et les retourne.
+      return updateUserData;
+    } catch (error) {
+      throw new Error(error.message); //Si la réponse n'est pas ok, elle extrait le message d'erreur de la réponse affiche l'erreur.
+    }
+  }
+);
+/*export const updateUsername = createAsyncThunk(
+  "auth/updateUsername",
+  async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({ userName: "newUsername" }),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json();
@@ -86,10 +126,42 @@ export const updateUsername = createAsyncThunk(
       }
 
       const updatedUserData = await response.json();
-      console.log(updatedUserData);
       return updatedUserData;
     } catch (error) {
       throw new Error(error.message);
     }
   }
-);
+);*/
+/*export const updateUsername = createAsyncThunk(
+  "auth/updateUsername",
+  async (newUserData) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("Aucun jeton d'authentification trouvé");
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(newUserData),
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const updatedUserData = await response.json();
+      return updatedUserData;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);*/

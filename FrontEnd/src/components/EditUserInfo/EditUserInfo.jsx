@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserProfile, updateUsername } from "../../actions/authActions";
+import { updateUsername } from "../../actions/authActions";
 import "../EditUserInfo/EditUserinfo.css";
 
 const EditUserInfo = () => {
   const dispatch = useDispatch();
-  const { userProfile, status } = useSelector((state) => state.auth);
+  const { userProfile, status, accessToken } = useSelector(
+    (state) => state.auth
+  );
   const [userName, setUsername] = useState("");
   const [message, setMessage] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, [dispatch]);
+    if (accessToken) {
+      dispatch(updateUsername(accessToken));
+    }
+  }, [dispatch, accessToken]);
 
   useEffect(() => {
     if (userProfile) {
@@ -26,7 +30,7 @@ const EditUserInfo = () => {
 
   const handleSave = async () => {
     try {
-      await dispatch(updateUsername(userName));
+      await dispatch(updateUsername(userName, accessToken));
       setMessage("Informations enregistrées avec succès !");
       setIsFormVisible(false);
     } catch (error) {
@@ -40,6 +44,7 @@ const EditUserInfo = () => {
     setIsFormVisible(false);
   };
 
+  //rendu du composant
   return (
     <form
       className={`form-group edit-user-info ${
@@ -91,213 +96,53 @@ const EditUserInfo = () => {
 };
 
 export default EditUserInfo;
-
-/*import React, { useState } from "react";
-
-import { updateUsername } from "../../actions/authActions"; // Importez la fonction d'action pour mettre à jour le nom d'utilisateur
+/*import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"; //interagir avec le store Redux.
+import { fetchUserProfile, updateUsername } from "../../actions/authActions"; //importe deux actions Redux liées à l'authentification : fetchUserProfile et updateUsername.
+import "../EditUserInfo/EditUserinfo.css";
 
 const EditUserInfo = () => {
-  const [userName, setUsername] = useState(""); // Utilisation du hook useState pour créer des états locaux pour le nom d'utilisateur
-  const [firstName, setFirstName] = useState(""); // Prénom est en lecture seule
-  const [lastName, setLastName] = useState(""); // Nom est en lecture seule
-  const [message, setMessage] = useState(""); // État local pour stocker le message de confirmation
+  const dispatch = useDispatch(); //Cette ligne crée une instance de la fonction dispatch de Redux, qui sera utilisée pour déclencher des actions.
+  const { userProfile, status } = useSelector((state) => state.auth); // extrait les propriétés userProfile et status du state Redux, dans le sous-état auth.
+  const [userName, setUsername] = useState(""); // crée un état local userName et une fonction setUsername pour le mettre à jour. Il est initialisé à une chaîne vide.
+  const [message, setMessage] = useState(""); //crée un état local message et une fonction setMessage pour le mettre à jour. Il est initialisé à une chaîne vide.
+  const [isFormVisible, setIsFormVisible] = useState(false); //crée un état local isFormVisible et une fonction setIsFormVisible pour le mettre à jour. Il est initialisé à false.
 
-  // Définition de la fonction de rappel qui gère les changements de valeur du champ du nom d'utilisateur
+  //démarre un effet de bord qui sera exécuté une seule fois, lors du montage du composant.
+  useEffect(() => {
+    dispatch(fetchUserProfile()); //déclenche l'action Redux fetchUserProfile pour récupérer le profil utilisateur.
+  }, [dispatch]); // indique que l'effet de bord ne doit être exécuté qu'une seule fois, car le tableau de dépendances est vide.
+
+  useEffect(() => {
+    if (userProfile) {
+      //démarre un autre effet de bord qui sera exécuté chaque fois que la propriété userProfile change.
+      //condition vérifie si la propriété userProfile n'est pas null ou undefined.
+      setUsername(userProfile.userName); //met à jour l'état local userName avec la valeur de userProfile.userName.
+    }
+  }, [userProfile]); //ndique que l'effet de bord doit être exécuté chaque fois que la propriété userProfile change.
+
+  // fonction est appelée lorsque la valeur du champ "User Name" change.
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
-  // Définition de la fonction de rappel qui gère l'enregistrement des données du formulaire
+  //fonction est appelée lorsque l'utilisateur clique sur le bouton "Save".
   const handleSave = async () => {
     try {
-      // Appel API pour mettre à jour le nom d'utilisateur
-      await updateUsername(userName);
-      setMessage("Informations enregistrées avec succès !");
+      await dispatch(updateUsername(userProfile.userName)); //déclenche l'action Redux updateUsername avec la nouvelle valeur de userName.
+
+      setMessage("Informations enregistrées avec succès !"); //met à jour l'état local message avec un message de succès.
+      setIsFormVisible(false); //met à jour l'état local isFormVisible à false pour cacher le formulaire.
     } catch (error) {
+      //met à jour l'état local message avec un message d'erreur.
       setMessage("Une erreur est survenue lors de l'enregistrement.");
     }
   };
 
-  // Définition de la fonction de rappel qui gère l'annulation des modifications du formulaire
+  //fonction est appelée lorsque l'utilisateur clique sur le bouton "Cancel".
   const handleCancel = () => {
-    setUsername("");
-    setMessage("Modifications annulées.");
+    setUsername(userProfile?.userName || ""); // met à jour l'état local userName avec la valeur de userProfile.userName ou une chaîne vide si userProfile est null ou undefined.
+    setMessage("Modifications annulées."); //met à jour l'état local message avec un message d'annulation.
+    setIsFormVisible(false); // met à jour l'état local isFormVisible à false pour cacher le formulaire.
   };
-
-  return (
-    <div>
-      <div className="edit-user-info">
-        <div className="form-group">
-          <label htmlFor="userName">Username</label>
-          <input
-            type="text"
-            id="userName"
-            value={userName}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
-          <input type="text" id="firstName" value={firstName} disabled />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
-          <input type="text" id="lastName" value={lastName} disabled />
-        </div>
-        <div className="buttons">
-          <button className="save-btn" onClick={handleSave}>
-            Save
-          </button>
-          <button className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        </div>
-      </div>
-      {message && <div className="message">{message}</div>}
-    </div>
-  );
-};
-
-export default EditUserInfo;*/
-/*import React, { useState } from "react";
-import "../EditUserInfo/EditUserinfo.css";
-import { updateUsername } from "../../actions/authActions"; // Importez la fonction d'action pour mettre à jour le nom d'utilisateur
-
-const EditUserInfo = () => {
-  const [username, setUsername] = useState(""); // Utilisation du hook useState pour créer des états locaux pour le nom d'utilisateur
-  const [firstName, setFirstName] = useState(""); // Prénom est en lecture seule
-  const [lastName, setLastName] = useState(""); // Nom est en lecture seule
-  const [message, setMessage] = useState(""); // État local pour stocker le message de confirmation
-
-  // Définition de la fonction de rappel qui gère les changements de valeur du champ du nom d'utilisateur
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  // Définition de la fonction de rappel qui gère l'enregistrement des données du formulaire
-  const handleSave = async () => {
-    try {
-      // Appel API pour mettre à jour le nom d'utilisateur
-      await updateUsername(username);
-      setMessage("Informations enregistrées avec succès !");
-    } catch (error) {
-      setMessage("Une erreur est survenue lors de l'enregistrement.");
-    }
-  };
-
-  // Définition de la fonction de rappel qui gère l'annulation des modifications du formulaire
-  const handleCancel = () => {
-    setUsername("");
-    setMessage("Modifications annulées.");
-  };
-
-  return (
-    <div>
-      <div className="edit-user-info">
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
-          <input type="text" id="firstName" value={firstName} disabled />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
-          <input type="text" id="lastName" value={lastName} disabled />
-        </div>
-        <div className="buttons">
-          <button className="save-btn" onClick={handleSave}>
-            Save
-          </button>
-          <button className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        </div>
-      </div>
-      {message && <div className="message">{message}</div>}
-    </div>
-  );
-};
-
-export default EditUserInfo;*/
-/*import React, { useState } from "react";
-import "../EditUserInfo/EditUserinfo.css";
-
-const EditUserInfo = () => {
-  const [username, setUsername] = useState(""); //Utilisation du hook useState pour créer des états locaux pour le nom d'utilisateur, le prénom et le nom.
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-
-  //Définition de la fonction de rappel qui gère les changements de valeur du champ du nom d'utilisateur.
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-  //Définition de la fonction de rappel qui gère les changements de valeur du champ prénom.
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-  //Définition de la fonction de rappel qui gère les changements de valeur du champ nom.
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-  //Définition de la fonction de rappel qui gère l'enregistrement des données du formulaire.
-  const handleSave = () => {
-    // Logique de sauvegarde des données
-  };
-  //Définition de la fonction de rappel qui gère l'annulation des modifications du formulaire.
-  const handleCancel = () => {
-    // Réinitialiser les données du formulaire si nécessaire
-  };
-  //section contient le code JSX qui définit le rendu du composant.
-  /*Crée un champ de saisie de texte pour le nom d'utilisateur avec la valeur liée à l'état local username et 
-  la fonction de rappel handleUsernameChange pour gérer les changements de valeur.*/
-/*return (
-    <div>
-      <div className="edit-user-info">
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName}
-            onChange={handleFirstNameChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={handleLastNameChange}
-          />
-        </div>
-        <div className="buttons">
-          <button className="save-btn" onClick={handleSave}>
-            Save
-          </button>
-          <button className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default EditUserInfo;*/
+*/
