@@ -12,27 +12,32 @@ const EditUserInfo = () => {
   const [message, setMessage] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  // mise a jour si le token change
   useEffect(() => {
     if (accessToken) {
       dispatch(updateUsername(accessToken));
     }
   }, [dispatch, accessToken]);
 
+  //mise a jour de la valeur de userName
   useEffect(() => {
     if (userProfile) {
       setUsername(userProfile.userName);
     }
   }, [userProfile]);
 
+  //affichage du formulaire
   const handleEditName = () => {
     setIsFormVisible(true);
     setUsername(userProfile?.userName || "");
   };
 
+  //changelement du userName, nouvelle valeur
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
+  //sauvegarde et envoie de la nouvelle valeur
   const handleSave = async () => {
     try {
       await dispatch(updateUsername(accessToken, userName));
@@ -43,6 +48,7 @@ const EditUserInfo = () => {
     }
   };
 
+  //annulation des données
   const handleCancel = () => {
     setUsername(userProfile.userName);
     setMessage("Modifications annulées.");

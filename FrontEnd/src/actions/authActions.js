@@ -66,6 +66,21 @@ export const fetchUserProfile = createAsyncThunk(
 );
 //mise a jour et envoie a swagger du nouveau userName
 export const updateUsername = createAsyncThunk(
+  "auth/updateUsername",
+  async (accessToken, { userName }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/v1/user/profile`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({ userName }),
+        }
+      );
+      /*export const updateUsername = createAsyncThunk(
   "auth/ updateUsername",
   async (accessToken) => {
     if (!accessToken) {
@@ -82,7 +97,7 @@ export const updateUsername = createAsyncThunk(
             Authorization: `Bearer ${accessToken}`,
           },
         }
-      );
+      );*/
       //Si le jeton d'authentification n'est pas fourni, affichage d'un message d'erreur.
       if (!response.ok) {
         const error = await response.json();
