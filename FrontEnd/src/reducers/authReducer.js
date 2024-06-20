@@ -2,7 +2,11 @@
 //importe la fonction createSlice du package @reduxjs/toolkit. Cette fonction permet de créer un "tranche" (slice) de l'état Redux.
 import { createSlice } from "@reduxjs/toolkit";
 //import des deux actions asynchrones définies dans le fichier authActions.js.
-import { login, fetchUserProfile } from "../actions/authActions";
+import {
+  login,
+  fetchUserProfile,
+  updateUsername,
+} from "../actions/authActions";
 
 //crée une nouvelle "tranche" (slice) de l'état Redux pour la gestion de l'authentification.
 const authSlice = createSlice({
@@ -61,19 +65,17 @@ const authSlice = createSlice({
           firstName: action.payload.body.firstName,
           lastName: action.payload.body.lastName,
           userName: action.payload.body.userName,
-          /*id: action.payload.id,
-          email: action.payload.email,
-          firstName: action.payload.firstName,
-          lastName: action.payload.lastName,
-          userName: action.payload.userName,*/
         };
       })
       //Met à jour l'état avec le statut "failed" et le message d'erreur lorsque l'action fetchUserProfile échoue.
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(updateUsername.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userProfile = action.payload.body.userName;
       });
   },
 });
-//exporte le réducteur de la tranche auth.
 export default authSlice.reducer;

@@ -1,5 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfile, updateUsername } from "../../actions/authActions";
 import "../EditUserInfo/EditUserinfo.css";
+
+const EditUserInfo = () => {
+  const dispatch = useDispatch();
+  const { userProfile, status } = useSelector((state) => state.auth);
+  const [userName, setUsername] = useState("");
+  const [message, setMessage] = useState("");
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userProfile) {
+      setUsername(userProfile.userName);
+    }
+  }, [userProfile]);
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handleSave = async () => {
+    try {
+      await dispatch(updateUsername(userName));
+      setMessage("Informations enregistrées avec succès !");
+      setIsFormVisible(false);
+    } catch (error) {
+      setMessage("Une erreur est survenue lors de l'enregistrement.");
+    }
+  };
+
+  const handleCancel = () => {
+    setUsername(userProfile?.userName || "");
+    setMessage("Modifications annulées.");
+    setIsFormVisible(false);
+  };
+
+  return (
+    <form
+      className={`form-group edit-user-info ${
+        isFormVisible ? "form-visible" : ""
+      }`}
+    >
+      <div>
+        <label htmlFor="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          value={userProfile?.firstName || ""}
+          disabled={status === "loading"}
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value={userProfile?.lastName || ""}
+          disabled={status === "loading"}
+        />
+      </div>
+      <div>
+        <label htmlFor="userName">User Name:</label>
+        <input
+          type="text"
+          id="userName"
+          name="userName"
+          value={userName}
+          onChange={handleUsernameChange}
+          disabled={status === "loading"}
+        />
+      </div>
+      <div className="buttons">
+        <button className="save-btn" onClick={handleSave}>
+          Save
+        </button>
+        <button className="cancel-btn" onClick={handleCancel}>
+          Cancel
+        </button>
+      </div>
+      {message && <div>{message}</div>}
+    </form>
+  );
+};
+
+export default EditUserInfo;
+
+/*import React, { useState } from "react";
+
 import { updateUsername } from "../../actions/authActions"; // Importez la fonction d'action pour mettre à jour le nom d'utilisateur
 
 const EditUserInfo = () => {
@@ -64,7 +158,7 @@ const EditUserInfo = () => {
   );
 };
 
-export default EditUserInfo;
+export default EditUserInfo;*/
 /*import React, { useState } from "react";
 import "../EditUserInfo/EditUserinfo.css";
 import { updateUsername } from "../../actions/authActions"; // Importez la fonction d'action pour mettre à jour le nom d'utilisateur
