@@ -28,7 +28,7 @@ function Header() {
     }
   }, [dispatch, accessToken]);
   console.log(userProfile); // Ajout de cette ligne pour afficher le contenu de userProfile
-  //section contient le code JSX qui définit le rendu du composant.
+
   /**{userProfile ? = Si userProfile existe, le composant affiche un message de bienvenue avec le nom de l'utilisateur,
    * un bouton "Edit name" et le composant EditUserInfo si showEditUserInfo est vrai.
    * Si userProfile est null, le composant affiche un message "Loading...".*/

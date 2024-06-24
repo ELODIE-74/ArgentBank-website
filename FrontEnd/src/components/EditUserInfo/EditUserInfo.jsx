@@ -3,14 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUsername } from "../../actions/authActions";
 import "../EditUserInfo/EditUserinfo.css";
 const EditUserInfo = () => {
-  const { userProfile, accessToken } = useSelector((state) => state.auth);
-  const { firstName, lastName, userName } = userProfile;
-  const dispatch = useDispatch();
-  const [message, setMessage] = useState("");
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [username, setUsername] = useState(userName);
-  const [initialUsername, setInitialUsername] = useState(userName);
-  const [isLoading, setIsLoading] = useState(false);
+  const { userProfile, accessToken } = useSelector((state) => state.auth); //extraits du store Redux à l'aide de useSelector.
+  const { firstName, lastName, userName } = userProfile; //extraits de userProfile
+  const dispatch = useDispatch(); //fonction utilisée pour dispatche des actions Redux.
+  //useDispatch et useSelector sont des hooks Redux utilisés pour interagir avec le store Redux.
+
+  //useState et useEffect sont des hooks React utilisés pour gérer l'état et les effets de bord.
+  const [message, setMessage] = useState(""); //affichage des messages
+  const [isFormVisible, setIsFormVisible] = useState(false); //contrôle l'affichage du formulaire d'édition.
+  const [username, setUsername] = useState(userName); //stockent la valeur du nom d'utilisateur.
+  const [initialUsername, setInitialUsername] = useState(userName); //stockent la valeur du nom d'utilisateur initiale.
+  const [isLoading, setIsLoading] = useState(false); //indique si une action est en cours
 
   /**est appelée lorsque l'utilisateur clique sur le bouton "Edit User Info".
    * Elle affiche le formulaire d'édition en mettant isFormVisible à true et
@@ -27,16 +30,18 @@ const EditUserInfo = () => {
     setUsername(event.target.value);
   };
 
-  //Met à jour la valeur de initialUsername avec la nouvelle valeur de username
+  /*Met à jour la valeur de initialUsername avec la nouvelle valeur de username.
+  Il dispatch l'action updateUsername avec accessToken et la nouvelle valeur de username.
+  met à jour message pour indiquer que les informations ont été enregistrées avec succès.*/
   const handleSave = async () => {
     try {
       setIsLoading(true);
       await dispatch(updateUsername({ accessToken, userName: username }));
       setMessage("Informations enregistrées avec succès !");
-      setIsFormVisible(false);
-      setInitialUsername(username);
+      setIsFormVisible(false); //masque le formulaire a la fermeture
+      setInitialUsername(username); //met à jour initialUsername avec la nouvelle valeur de username.
     } catch (error) {
-      setMessage("Une erreur est survenue lors de l'enregistrement.");
+      setMessage("Une erreur est survenue lors de l'enregistrement."); //met à jour message pour indiquer que l'enregistrement a échoué.
     } finally {
       setIsLoading(false);
     }
@@ -45,18 +50,30 @@ const EditUserInfo = () => {
   //Met à jour le message pour indiquer que les modifications ont été annulées
   const handleCancel = () => {
     setMessage("Modifications annulées.");
-    setIsFormVisible(false);
-    setUsername(initialUsername);
+    setIsFormVisible(false); //masque le formulaire a la fermeture
+    setUsername(initialUsername); //restaure la valeur de username avec la valeur initiale de initialUsername
   };
 
   //retourne le rendu conditionnel du bouton "Edit User Info" ou du formulaire d'édition en fonction de la valeur de isFormVisible.
   return (
-    <div>
+    <div className="divdesignformulaire">
       {!isFormVisible && (
-        <button onClick={handleEditName}>Edit User Info</button>
+        <button className="edit-button" onClick={handleEditName}>
+          Edit User Info
+        </button>
       )}
+
       {isFormVisible && (
         <form className="form-group edit-user-info">
+          <h1>Edit user info</h1>
+          <div>
+            <label>Username:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </div>
           <div>
             <label htmlFor="firstName">First Name:</label>
             <input
@@ -64,18 +81,17 @@ const EditUserInfo = () => {
               id="firstName"
               name="firstName"
               value={firstName}
+              readOnly
             />
           </div>
           <div>
             <label htmlFor="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value={lastName} />
-          </div>
-          <div>
-            <label>Username:</label>
             <input
               type="text"
-              value={username}
-              onChange={handleUsernameChange}
+              id="lastName"
+              name="lastName"
+              value={lastName}
+              readOnly
             />
           </div>
 
@@ -104,177 +120,3 @@ const EditUserInfo = () => {
   );
 };
 export default EditUserInfo;
-/*import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUsername } from "../../actions/authActions";
-import "../EditUserInfo/EditUserinfo.css";
-const EditUserInfo = () => {
-  const { userProfile, accessToken } = useSelector((state) => state.auth);
-  const { firstName, lastName, userName } = userProfile;
-  const dispatch = useDispatch();
-  const [message, setMessage] = useState("");
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [username, setUsername] = useState(userName);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleEditName = () => {
-    setIsFormVisible(true);
-    setUsername(userName);
-  };
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handleSave = async () => {
-    try {
-      setIsLoading(true);
-      await dispatch(updateUsername({ accessToken, userName: username }));
-      setMessage("Informations enregistrées avec succès !");
-      setIsFormVisible(false);
-    } catch (error) {
-      setMessage("Une erreur est survenue lors de l'enregistrement.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setMessage("Modifications annulées.");
-    setIsFormVisible(false);
-  };
-
-  return (
-    <div>
-      {!isFormVisible && (
-        <button onClick={handleEditName}>Edit User Info</button>
-      )}
-      {isFormVisible && (
-        <form className="form-group edit-user-info">
-          <div>
-            <label htmlFor="firstName">First Name:</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={firstName}
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value={lastName} />
-          </div>
-          <div>
-            <label htmlFor="userName">UserName:</label>
-            <input
-              type="text"
-              id="userName"
-              name="userName"
-              value={userName}
-              onChange={handleUsernameChange}
-            />
-          </div>
-          <div className="buttons">
-            <button
-              type="button"
-              className="save-btn"
-              onClick={handleSave}
-              disabled={isLoading}
-            >
-              {isLoading ? "Saving..." : "Save"}
-            </button>
-            <button
-              type="button"
-              className="cancel-btn"
-              onClick={handleCancel}
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
-          </div>
-          {message && <div>{message}</div>}
-        </form>
-      )}
-    </div>
-  );
-};
-
-export default EditUserInfo;*/
-/*import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUsername } from "../../actions/authActions";
-import "../EditUserInfo/EditUserinfo.css";
-
-const EditUserInfo = () => {
-  const { userProfile, accessToken } = useSelector((state) => state.auth);
-  const { firstName, lastName, userName } = userProfile;
-  const dispatch = useDispatch();
-  const [message, setMessage] = useState("");
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [username, setUsername] = useState(userName);
-  //console.log(userProfile);
-  //console.log(accessToken);
-  //affichage du formulaire
-  function handleEditName() {
-    setIsFormVisible(true);
-    setUsername(userName);
-  }
-
-  //changelement du userName, nouvelle valeur
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handleSave = async () => {
-    try {
-      await dispatch(updateUsername({ accessToken, userName }));
-      setMessage("Informations enregistrées avec succès !");
-      setIsFormVisible(false);
-    } catch (error) {
-      setMessage("Une erreur est survenue lors de l'enregistrement.");
-    }
-  };
-
-  const handleCancel = () => {
-    setMessage("Modifications annulées.");
-    setIsFormVisible(false);
-  };
-
-  return (
-    <form
-      className={`form-group edit-user-info ${
-        isFormVisible ? "form-visible" : ""
-      }`}
-    >
-      <div>
-        <label htmlFor="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" value={firstName} />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" value={lastName} />
-      </div>
-      <div>
-        <label htmlFor="userName">UserName:</label>
-        <input
-          type="text"
-          id="userName"
-          name="userName"
-          value={userName}
-          onChange={handleUsernameChange}
-        />
-      </div>
-      <div className="buttons">
-        <button className="save-btn" onClick={handleSave}>
-          Save
-        </button>
-        <button className="cancel-btn" onClick={handleCancel}>
-          Cancel
-        </button>
-      </div>
-      {message && <div>{message}</div>}
-    </form>
-  );
-};
-
-export default EditUserInfo;*/
