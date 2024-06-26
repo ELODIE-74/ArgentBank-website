@@ -113,7 +113,7 @@ const EditUserInfo = () => {
               Cancel
             </button>
           </div>
-          {message && <div>{message}</div>}
+          {setMessage && <div className="confirmation-message">{message}</div>}
         </form>
       )}
     </div>
