@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/user" element={<User />} />
-          <Route path="*" element={<Error404 />} />
+          <Route path="/error404" element={<Error404 />} />
         </Routes>
       </div>
     </Router>
@@ -25,4 +25,4 @@ function App() {
 }
 
 export default App;
-//configuration des différentes routes
+//configuration des différentes routes*/
