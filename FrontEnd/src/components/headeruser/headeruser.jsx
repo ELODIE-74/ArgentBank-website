@@ -1,5 +1,48 @@
-/** import des hooks useState et useEffect de React, ainsi que le composant EditUserInfo. */
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../actions/authActions";
+import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
+
+function Header() {
+  const [showEditUserInfo, setShowEditUserInfo] = useState(false);
+  const { userProfile, accessToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(fetchUserProfile(accessToken));
+    }
+  }, [dispatch, accessToken]);
+
+  const toggleEditUserInfo = () => {
+    setShowEditUserInfo(!showEditUserInfo);
+  };
+
+  return (
+    <div className="header">
+      {userProfile ? (
+        <>
+          <h1>
+            Welcome back
+            <br />
+            {userProfile.userName}
+          </h1>
+          <div className="header-actions">
+            <button className="edit-button" onClick={toggleEditUserInfo}>
+              {showEditUserInfo ? "Close" : "EditName"}
+            </button>
+          </div>
+          {showEditUserInfo && <EditUserInfo />}
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+}
+
+export default Header;
+/*import React, { useState, useEffect } from "react";
 import EditUserInfo from "../../components/EditUserInfo/EditUserInfo";
 //import des hooks useSelector et useDispatch de Redux, qui permettent d'accéder à l'état global de l'application et de déclencher des actions.
 import { useSelector, useDispatch } from "react-redux";
@@ -16,13 +59,13 @@ function Header() {
 
   /*fonction est appelée lorsque l'utilisateur clique sur le bouton "Edit name". 
   Elle définit la valeur de showEditUserInfo à true pour afficher le composant EditUserInfo.*/
-  const handleEditNameClick = () => {
+/* const handleEditNameClick = () => {
     setShowEditUserInfo(true);
   };
 
   /**hook useEffect est appelé lorsque le composant est monté ou que les dépendances dispatch ou accessToken changent.
    * Il déclenche l'action fetchUserProfile avec le accessToken pour récupérer le profil de l'utilisateur. */
-  useEffect(() => {
+/* useEffect(() => {
     if (accessToken) {
       dispatch(fetchUserProfile(accessToken));
     }
@@ -32,7 +75,7 @@ function Header() {
   /**{userProfile ? = Si userProfile existe, le composant affiche un message de bienvenue avec le nom de l'utilisateur,
    * un bouton "Edit name" et le composant EditUserInfo si showEditUserInfo est vrai.
    * Si userProfile est null, le composant affiche un message "Loading...".*/
-  return (
+/*return (
     <div className="header">
       {userProfile ? (
         <>
@@ -52,4 +95,4 @@ function Header() {
     </div>
   );
 }
-export default Header;
+export default Header;*/

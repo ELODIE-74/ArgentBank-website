@@ -13,7 +13,7 @@
   font-size: 280px;
   font-weight: 700;
   margin: 0;
-  color: green;
+  color: #00bc77;
   margin-left: 15px;
 }
 /*texte en dessous de l'error 404*/
@@ -34,7 +34,7 @@
 /*animation au survol du lien*/
 .LinkError404:hover {
   filter: brightness(0.95);
-  color: green;
+  color: #00bc77;
 }
 /*media queries mobile*/
 @media (max-width: 482px) {
