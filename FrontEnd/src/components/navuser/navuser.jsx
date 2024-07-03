@@ -24,9 +24,7 @@ function MainNavUser() {
       <div className="main-nav-right">
         <a className="main-nav-item-connected" href="/user">
           <i className="fa fa-user-circle"></i>
-          {userProfile
-            ? userProfile.firstName + " " + userProfile.lastName
-            : "Loading..."}
+          {userProfile ? userProfile.userName : "Loading..."}
         </a>
         <a className="main-nav-item-connected" href="/settings">
           <i className="fas fa-cog"></i>
